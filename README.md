@@ -26,7 +26,9 @@ Add the mod to your `mod.json`:
 
 ## How to use this mod?
 
-* For `ProfilePage`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. Here's an example of how to put your badge inside:
+* For `ProfilePage`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. **Make sure to put an ID on your badge which contains `-badge` inside of it.** 
+
+Here's an example of how to put your badge inside:
 
 ```cpp
 #include <Geode/Geode.hpp>
@@ -43,6 +45,8 @@ class $modify(ProfilePage) {
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 
         ...
+
+        yourBadge->setID("mycustombadge-badge")
 
         username_menu->addChild(yourBadge);
     }
