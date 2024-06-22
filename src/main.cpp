@@ -23,11 +23,6 @@ class $modify(CustomProfilePage, ProfilePage) {
 		BadgeMenu::scene(childs);
 	}
 
-	void onClose(cocos2d::CCObject* sender) {
-		m_fields->loaded = false;
-		ProfilePage::onClose(sender);
-	}
-
 	void loadPageFromUserInfo(GJUserScore* a2) {
 		ProfilePage::loadPageFromUserInfo(a2);
 
