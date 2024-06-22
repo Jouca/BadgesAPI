@@ -37,9 +37,9 @@ Here's an example of how to put your badge inside:
 using namespace geode::prelude;
 
 class $modify(ProfilePage) {
-	void loadPageFromUserInfo(GJUserScore* a2) {
-		ProfilePage::loadPageFromUserInfo(a2);
-		auto layer = m_mainLayer;
+    void loadPageFromUserInfo(GJUserScore* a2) {
+        ProfilePage::loadPageFromUserInfo(a2);
+        auto layer = m_mainLayer;
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
         // your code for create your badge
