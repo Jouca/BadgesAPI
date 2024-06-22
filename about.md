@@ -2,7 +2,7 @@
 
 An API mod for a better display for badges.
 
-![Mod Example](resources/screen.png)
+![Mod Example](jouca.badgesapi/screen.png&scale:0.8)
 
 ## How to use this mod?
 

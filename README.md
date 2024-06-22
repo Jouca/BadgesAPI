@@ -2,6 +2,8 @@
 
 An API mod for a better display for badges.
 
+![Mod Example](resources/screen.png)
+
 This mod use **NodeIDs** as a dependency to make tags working well, you may use it if you want to use this API.
 
 ## Using as a dependency
