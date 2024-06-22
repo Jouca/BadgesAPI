@@ -6,25 +6,35 @@
 
 #include <Geode/loader/Log.hpp>
 #include <string>
-
 #include "badges/BadgeMenu.h"
 
 class $modify(CustomProfilePage, ProfilePage) {
+	struct Fields {
+		bool loaded = false;
+        CCArray* m_childs = CCArray::create();
+    };
+
 	static void onModify(auto& self) {
         self.setHookPriority("ProfilePage::loadPageFromUserInfo", INT_MIN);
     }
-
-	struct Fields {
-        CCArray* m_childs = CCArray::create();
-    };
 
 	void onBadgePlus(CCObject* pSender) {
 		auto childs = as<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
 		BadgeMenu::scene(childs);
 	}
 
+	void onClose(cocos2d::CCObject* sender) {
+		m_fields->loaded = false;
+		ProfilePage::onClose(sender);
+	}
+
 	void loadPageFromUserInfo(GJUserScore* a2) {
 		ProfilePage::loadPageFromUserInfo(a2);
+
+		if (m_fields->loaded) {
+			return;
+		}
+		m_fields->loaded = true;
 
 		auto layer = m_mainLayer;
 
