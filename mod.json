@@ -7,10 +7,11 @@
 		"ios": "2.206"
 	},
 	"id": "jouca.badgeapi",
-	"name": "BadgeAPI",
+	"name": "Badge API",
 	"version": "v1.0.0",
 	"developer": "Jouca",
 	"description": "",
+	"repository": "https://github.com/Jouca/BadgeAPI",
 	"dependencies": [
         {
             "id": "geode.node-ids",
@@ -22,5 +23,9 @@
         "sprites": [
             "resources/*.png"
         ]
-    }
+    },
+	"issues": {
+		"url": "https://github.com/Jouca/BadgeAPI/issues",
+		"info": "If you encounter an issue with Badge API, please report it here."
+	}
 }

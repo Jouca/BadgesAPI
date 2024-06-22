@@ -1,22 +1,48 @@
-# BadgeAPI
-This is where she makes a mod.
+# Badge API
 
-<img src="logo.png" width="150" alt="the mod's logo" />
+An API mod for a better display for badges.
 
-*Update logo.png to change your mod's icon (please)*
+This mod use **NodeIDs** as a dependency to make tags working well, you may use it if you want to use this API.
 
-## Getting started
-We recommend heading over to [the getting started section on our docs](https://docs.geode-sdk.org/getting-started/) for useful info on what to do next.
+## Using as a dependency
 
-## Build instructions
-For more info, see [our docs](https://docs.geode-sdk.org/getting-started/create-mod#build)
-```sh
-# Assuming you have the CLI set up already
-geode build
+Add the mod to your `mod.json`:
+
+```json
+{
+    "dependencies": [
+        {
+            "id": "jouca.badgeapi",
+            "version": ">=v1.0.0",
+            "importance": "required"
+        }
+    ]
+}
 ```
 
-# Resources
-* [Geode SDK Documentation](https://docs.geode-sdk.org/)
-* [Geode SDK Source Code](https://github.com/geode-sdk/geode/)
-* [Bindings](https://github.com/geode-sdk/bindings/)
-* [Dev Tools](https://github.com/geode-sdk/DevTools)
+**All the hooks on this API are in very low priority states, you should make sure that your mod doesn't go too much bellow the priorities that Badge API uses for correctly detecting your badges.**
+
+## How to use this mod?
+
+* For `ProfilePage`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. Here's an example of how to put your badge inside:
+
+```cpp
+#include <Geode/Geode.hpp>
+#include <Geode/modify/ProfilePage.hpp>
+
+using namespace geode::prelude;
+
+class $modify(ProfilePage) {
+	void loadPageFromUserInfo(GJUserScore* a2) {
+		ProfilePage::loadPageFromUserInfo(a2);
+
+		auto layer = m_mainLayer;
+
+		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+
+        ...
+
+        username_menu->addChild(yourBadge);
+    }
+};
+```
