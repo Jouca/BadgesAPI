@@ -37,10 +37,16 @@ bool BadgeMenu::setup() {
     }
     cells.push_back(BadgeMenuCell::create(cell, { 300, 210 }));
 
-    auto border = OldBorder::create(ListView::create(cells.inner(), 40, 292, 198), { 0xBF, 0x72, 0x3E, 0xFF }, {294, 198}, {1, 1});
-    border->setPosition(m_mainLayer->getContentSize() / 2 - border->getContentSize() / 2);
+    auto border = OldBorder::create(ListView::create(cells.inner(), 40, 292, 160), { 0xBF, 0x72, 0x3E, 0xFF }, {294, 162}, {1, 1});
+    border->setPositionX(m_mainLayer->getContentSize().width / 2 - border->getContentSize().width / 2);
+    border->setPositionY(60);
     setTouchPriority(100);
     m_mainLayer->addChild(border);
+
+    CCSprite* title_badges = CCSprite::create("badges.png"_spr);
+    title_badges->setPosition({m_mainLayer->getContentSize().width / 2, 241});
+    title_badges->setScale(0.625f);
+    m_mainLayer->addChild(title_badges);
 
     return true;
 }
