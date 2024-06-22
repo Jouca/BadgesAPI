@@ -44,7 +44,7 @@ class $modify(ProfilePage) {
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 
-        ...
+        // your code for create your badge
 
         yourBadge->setID("mycustombadge-badge")
 
