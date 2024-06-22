@@ -6,12 +6,12 @@
 		"mac": "2.206",
 		"ios": "2.206"
 	},
-	"id": "jouca.badgeapi",
-	"name": "Badge API",
+	"id": "jouca.badgesapi",
+	"name": "Badges API",
 	"version": "v1.0.0",
 	"developer": "Jouca",
 	"description": "",
-	"repository": "https://github.com/Jouca/BadgeAPI",
+	"repository": "https://github.com/Jouca/BadgesAPI",
 	"dependencies": [
         {
             "id": "geode.node-ids",
@@ -25,7 +25,7 @@
         ]
     },
 	"issues": {
-		"url": "https://github.com/Jouca/BadgeAPI/issues",
+		"url": "https://github.com/Jouca/BadgesAPI/issues",
 		"info": "If you encounter an issue with Badge API, please report it here."
 	}
 }

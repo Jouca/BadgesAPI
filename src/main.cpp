@@ -1,8 +1,8 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/ProfilePage.hpp>
 
-// Badge API
-// Mod made by Jouca
+// Badges API
+// Mod API made by Jouca
 
 #include <Geode/loader/Log.hpp>
 #include <string>

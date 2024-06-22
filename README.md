@@ -1,4 +1,4 @@
-# Badge API
+# Badges API
 
 An API mod for a better display for badges.
 
@@ -12,7 +12,7 @@ Add the mod to your `mod.json`:
 {
     "dependencies": [
         {
-            "id": "jouca.badgeapi",
+            "id": "jouca.badgesapi",
             "version": ">=v1.0.0",
             "importance": "required"
         }
@@ -20,7 +20,7 @@ Add the mod to your `mod.json`:
 }
 ```
 
-**All the hooks on this API are in very low priority states, you should make sure that your mod doesn't go too much bellow the priorities that Badge API uses for correctly detecting your badges.**
+**All the hooks on this API are in very low priority states, you should make sure that your mod doesn't go too much bellow the priorities that Badges API uses for correctly detecting your badges.**
 
 ## How to use this mod?
 
