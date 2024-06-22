@@ -1,10 +1,13 @@
 #pragma once
 #include "../includes.h"
+#include "../OldBorder.hpp"
 
 class BadgeMenu : public Popup<> {
     protected:
         bool setup() override;
-        cocos2d::CCSize m_sScrLayerSize;
     public:
+        CCArray* m_data;
+
+        BadgeMenu(CCArray* data);
         static void scene(CCArray* array);
 };

@@ -19,7 +19,8 @@ class $modify(CustomProfilePage, ProfilePage) {
     };
 
 	void onBadgePlus(CCObject* pSender) {
-		BadgeMenu::scene(nullptr);
+		auto childs = as<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
+		BadgeMenu::scene(childs);
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {
@@ -59,10 +60,11 @@ class $modify(CustomProfilePage, ProfilePage) {
 		}
 
 		// If there are more than one badge, create the badge menu
-		if (m_fields->m_childs->count() > 1) {
+		if (m_fields->m_childs->count() >= 2) {
 			CCSprite* badge_plus = CCSprite::createWithSpriteFrameName("GJ_plusBtn_001.png");
 			badge_plus->setScale(.5f);
 			auto badge_plus_item = CCMenuItemSpriteExtra::create(badge_plus, this, menu_selector(CustomProfilePage::onBadgePlus));
+			badge_plus_item->setUserObject(m_fields->m_childs);
 			badge_plus_item->setPosition(label->getPosition() + CCPoint { -5.f, -1.f });
 			username_menu->addChild(badge_plus_item);
 
