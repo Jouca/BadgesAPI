@@ -97,11 +97,19 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCMenuItemSpriteExtra* badge_api_plus = typeinfo_cast<CCMenuItemSpriteExtra*>(this->getChildByIDRecursive("badgeAPI-plus-badge"));
 		if (badge_api_plus) {
 			auto badge_api_plus_item = as<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
+			CCArray* temp2 = CCArray::create();
 			CCObject* childObj;
 			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
 				CCNode* child = as<CCNode*>(childObj);
-				temp->addObject(child);
+				temp2->addObject(child);
 			}
+
+			CCARRAY_FOREACH(temp, childObj) {
+				CCNode* child = as<CCNode*>(childObj);
+				temp2->addObject(child);
+			}
+
+			temp = temp2;
 		}
 
 		if (m_fields->badgeCount < temp->count()) {
