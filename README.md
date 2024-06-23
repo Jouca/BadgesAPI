@@ -49,6 +49,8 @@ class $modify(ProfilePage) {
 };
 ```
 
+__**If you add your badge after the Layer has loaded (example with HTTP requests), it will still be added!**__
+
 ## Credits
 * [Jouca](https://twitter.com/JoucaJouca)
 * elnexreal - Logo for the mod

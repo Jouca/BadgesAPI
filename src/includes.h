@@ -6,6 +6,8 @@ using namespace geode::prelude;
 #include <mutex>
 #include <thread>
 #include <algorithm>
+#include <cctype>
+#include <string>
 
 #define OPT(expr) if (auto __opt__ = expr) __opt__
 

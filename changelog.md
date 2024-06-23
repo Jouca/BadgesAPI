@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.0.3</c> <cb>(2024-06-23)</c>
+* <cg>Added</c> compatibility when you add your badge late
+
 ## <cj>v1.0.2</c> <cb>(2024-06-23)</c>
 * <cy>Fixed</c> crashing when refreshing profile
 
