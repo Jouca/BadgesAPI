@@ -10,7 +10,7 @@
 	"name": "Badges API",
 	"version": "v1.0.3",
 	"developer": "Jouca",
-	"description": "",
+	"description": "An API to integrate badges in a special menu & optimizing UI",
 	"repository": "https://github.com/Jouca/BadgesAPI",
 	"dependencies": [
         {
