@@ -1,4 +1,8 @@
 # Changelog
+## <cj>v1.0.4</c> <cb>(2024-07-09)</c>
+* <cg>Added</c> plus custom badge (thanks Mave!)
+* <cy>Fixed</c> real moderators having issues when their badge is loaded on profile twice after refresh
+
 ## <cj>v1.0.3</c> <cb>(2024-06-23)</c>
 * <cg>Added</c> compatibility when you add your badge late
 

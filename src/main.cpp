@@ -37,8 +37,8 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 		// If there are more than one badge, create the badge menu
 		if (badges->count() >= 2) {
-			CCSprite* badge_plus = CCSprite::createWithSpriteFrameName("GJ_plusBtn_001.png");
-			badge_plus->setScale(.5f);
+			CCSprite* badge_plus = CCSprite::create("plusBadge.png"_spr);
+			badge_plus->setScale(1.225f);
 			auto badge_plus_item = CCMenuItemSpriteExtra::create(badge_plus, this, menu_selector(CustomProfilePage::onBadgePlus));
 			badge_plus_item->setUserObject(badges);
 			badge_plus_item->setID("badgeAPI-plus-badge");
@@ -58,6 +58,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 	void updateBadgesSchedule(float dt) {
 		auto layer = m_mainLayer;
+		int badge_count = m_fields->badgeCount;
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 		if (!username_menu) {
@@ -74,9 +75,9 @@ class $modify(CustomProfilePage, ProfilePage) {
 			return;
 		}
 
-		if (m_fields->badgeCount < 1 && !m_fields->plus_badge) {
+		if (badge_count < 1 && !m_fields->plus_badge) {
 			return;
-		}
+		} 
 
 		CCArray* childsToRemoveTemp = CCArray::create();
 		CCArray* temp = CCArray::create();
@@ -123,11 +124,14 @@ class $modify(CustomProfilePage, ProfilePage) {
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {
+		if (this->getChildByIDRecursive("mod-badge")) as<CCNode*>(this->getChildByIDRecursive("mod-badge"))->removeFromParent();
+
 		ProfilePage::loadPageFromUserInfo(a2);
 
 		if (m_fields->loaded) {
 			return;
 		}
+
 		m_fields->loaded = true;
 
 		auto layer = m_mainLayer;
