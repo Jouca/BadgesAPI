@@ -1,5 +1,12 @@
 # Badges API
 
+<img src="https://img.shields.io/github/downloads/Jouca/BadgesAPI/total?style=for-the-badge" style="text-align: center;"></img>
+<a href="https://discord.gg/MU4Rpc6xbJ" style="text-align: center;"><img src="https://dcbadge.limes.pink/api/server/MU4Rpc6xbJ"></img></a>
+<img src="https://img.shields.io/github/last-commit/Jouca/BadgesAPI?display_timestamp=committer&style=for-the-badge&color=ffA500" style="text-align: center;"></img>
+<img src="https://img.shields.io/github/commit-activity/w/Jouca/BadgesAPI?style=for-the-badge" style="text-align: center;"></img>
+<img src="https://img.shields.io/github/commits-since/Jouca/BadgesAPI/latest?style=for-the-badge" style="text-align: center;"></img>
+<img src="https://img.shields.io/github/created-at/Jouca/BadgesAPI?style=for-the-badge" style="text-align: center;"></img>
+
 An API mod for a better display for badges.
 
 ![Mod Example](resources/screen.png)
