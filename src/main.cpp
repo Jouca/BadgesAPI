@@ -75,10 +75,6 @@ class $modify(CustomProfilePage, ProfilePage) {
 			return;
 		}
 
-		if (badge_count < 1 && !m_fields->plus_badge) {
-			return;
-		} 
-
 		CCArray* childsToRemoveTemp = CCArray::create();
 		CCArray* temp = CCArray::create();
 		CCObject* childObj;
