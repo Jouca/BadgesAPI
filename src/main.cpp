@@ -14,6 +14,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 		bool loaded = false;
 		bool plus_badge = false;
 		int badgeCount = 0;
+		BadgeMenu* badgeMenu = nullptr;
     };
 
 	static void onModify(auto& self) {
@@ -94,8 +95,18 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCMenuItemSpriteExtra* badge_api_plus = typeinfo_cast<CCMenuItemSpriteExtra*>(this->getChildByIDRecursive("badgeAPI-plus-badge"));
 		if (badge_api_plus) {
 			auto badge_api_plus_item = as<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
-			CCArray* temp2 = CCArray::create();
+
+			// Check if badges are already loaded on BadgeMenu and then remove those on the profile page
 			CCObject* childObj;
+			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
+				CCNode* child = as<CCNode*>(childObj);
+				if (auto user_child = username_menu->getChildByIDRecursive(child->getID())) {
+					user_child->removeFromParent();
+					username_menu->updateLayout();
+				}
+			}
+			
+			CCArray* temp2 = CCArray::create();
 			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
 				CCNode* child = as<CCNode*>(childObj);
 				temp2->addObject(child);
@@ -103,7 +114,18 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 			CCARRAY_FOREACH(temp, childObj) {
 				CCNode* child = as<CCNode*>(childObj);
-				temp2->addObject(child);
+
+				// check if ID is present on badge_api_plus_item objects
+				bool found = false;
+				CCObject* childObj2;
+				CCARRAY_FOREACH(badge_api_plus_item, childObj2) {
+					CCNode* child2 = as<CCNode*>(childObj2);
+					if (child->getID() == child2->getID()) {
+						found = true;
+						break;
+					}
+				}
+				if (!found) temp2->addObject(child);
 			}
 
 			temp = temp2;
@@ -116,7 +138,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 	void onBadgePlus(CCObject* pSender) {
 		auto childs = as<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
-		BadgeMenu::scene(childs);
+		m_fields->badgeMenu = BadgeMenu::scene(childs);
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {

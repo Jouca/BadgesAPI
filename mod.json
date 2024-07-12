@@ -8,7 +8,7 @@
 	},
 	"id": "jouca.badgesapi",
 	"name": "Badges API",
-	"version": "v1.0.5",
+	"version": "v1.0.6",
 	"developer": "Jouca",
 	"description": "An API to integrate badges in a special menu & optimizing UI",
 	"repository": "https://github.com/Jouca/BadgesAPI",
@@ -26,6 +26,6 @@
     },
 	"issues": {
 		"url": "https://github.com/Jouca/BadgesAPI/issues",
-		"info": "If you encounter an issue with Badge API, please report it here."
+		"info": "If you encounter an issue with Badges API, please report it here."
 	}
 }

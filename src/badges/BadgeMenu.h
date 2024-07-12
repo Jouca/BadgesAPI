@@ -9,5 +9,5 @@ class BadgeMenu : public Popup<> {
         CCArray* m_data;
 
         BadgeMenu(CCArray* data);
-        static void scene(CCArray* array);
+        static BadgeMenu* scene(CCArray* array);
 };

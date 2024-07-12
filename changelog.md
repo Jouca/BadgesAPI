@@ -1,4 +1,8 @@
 # Changelog
+## <cj>v1.0.6</c> <cb>(2024-07-13)</c>
+* <cy>Fixed</c> badges duplication after reloading profile
+* <cy>Changed</c> mod picture description
+
 ## <cj>v1.0.5</c> <cb>(2024-07-10)</c>
 * <cy>Fixed</c> badges not handled correctly when added at the same time
 

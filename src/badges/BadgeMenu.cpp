@@ -1,7 +1,7 @@
 #include "BadgeMenu.h"
 #include "BadgeMenuCell.h"
 
-void BadgeMenu::scene(CCArray* array) {
+BadgeMenu* BadgeMenu::scene(CCArray* array) {
     auto popup = new BadgeMenu(array);
 
     if (popup && popup->init(300.0f, 210.0f)) {
@@ -11,6 +11,8 @@ void BadgeMenu::scene(CCArray* array) {
     } else {
         CC_SAFE_DELETE(popup);
     }
+
+    return popup;
 };
 
 BadgeMenu::BadgeMenu(CCArray* data) : m_data(data) {}
