@@ -8,6 +8,7 @@
 #include <Geode/loader/Log.hpp>
 #include <string>
 #include "badges/BadgeMenu.h"
+#include "RescalingNode.hpp"
 
 class $modify(CustomProfilePage, ProfilePage) {
 	struct Fields {
@@ -38,9 +39,23 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 		// If there are more than one badge, create the badge menu
 		if (badges->count() >= 2) {
-			CCSprite* badge_plus = CCSprite::create("plusBadge.png"_spr);
-			badge_plus->setScale(1.225f);
-			auto badge_plus_item = CCMenuItemSpriteExtra::create(badge_plus, this, menu_selector(CustomProfilePage::onBadgePlus));
+			CCSprite* child_spr;
+			auto child = as<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
+			if (child) {
+				child_spr = CCSprite::createWithSpriteFrame(as<CCSprite*>(child->getChildren()->objectAtIndex(0))->displayFrame());
+				child_spr->setScale(as<CCSprite*>(child->getChildren()->objectAtIndex(0))->getScale());
+			} else {
+				child_spr = CCSprite::createWithSpriteFrame(as<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
+				child_spr->setScale(as<CCSprite*>(badges->objectAtIndex(0))->getScale());
+			}
+
+			CCSprite* badge_plus = CCSprite::create("plusLittleBtn.png"_spr);
+			badge_plus->setID("badgeAPI-plus-btn-spr");
+			CCNode* badge_plus_node = RescalingNode::create(badge_plus, { child_spr->getContentSize().width * 0.4f, child_spr->getContentSize().height * 0.4f });
+			badge_plus_node->setPosition({child_spr->getContentSize().width * 0.7f, 0.f});
+			child_spr->addChild(badge_plus_node);
+
+			auto badge_plus_item = CCMenuItemSpriteExtra::create(child_spr, this, menu_selector(CustomProfilePage::onBadgePlus));
 			badge_plus_item->setUserObject(badges);
 			badge_plus_item->setID("badgeAPI-plus-badge");
 			badge_plus_item->setPosition(label->getPosition() + CCPoint { -5.f, -1.f });

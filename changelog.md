@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.0.7</c> <cb>(2024-08-20)</c>
+* <cy>Changed</c> badge plus with a better plus sprite inside the current badge to still show the first badge of the user
+
 ## <cj>v1.0.6</c> <cb>(2024-07-13)</c>
 * <cy>Fixed</c> badges duplication after reloading profile
 * <cy>Changed</c> mod picture description
