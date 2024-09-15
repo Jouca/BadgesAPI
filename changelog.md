@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.1.0</c> <cb>(2024-09-15)</c>
+* <cg>Added</c> handler for badges in comments
+
 ## <cj>v1.0.7</c> <cb>(2024-08-20)</c>
 * <cy>Changed</c> badge plus with a better plus sprite inside the current badge to still show the first badge of the user
 

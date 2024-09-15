@@ -1,5 +1,5 @@
 {
-	"geode": "3.4.0",
+	"geode": "3.6.1",
 	"gd": {
 		"win": "2.206",
 		"android": "2.206",
@@ -8,14 +8,14 @@
 	},
 	"id": "jouca.badgesapi",
 	"name": "Badges API",
-	"version": "v1.0.7",
+	"version": "v1.1.0",
 	"developer": "Jouca",
-	"description": "An API to integrate badges in a special menu & optimizing UI for ProfilePage",
+	"description": "An API mod to integrate badges in a special menu & optimizing UI for ProfilePage & CommentCell",
 	"repository": "https://github.com/Jouca/BadgesAPI",
 	"dependencies": [
         {
             "id": "geode.node-ids",
-            "version": ">=v1.13.2",
+            "version": ">=v1.14.0",
             "importance": "required"
         }
     ],

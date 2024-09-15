@@ -7,7 +7,7 @@
 <img src="https://img.shields.io/github/commits-since/Jouca/BadgesAPI/latest?style=for-the-badge" style="text-align: center;"></img>
 <img src="https://img.shields.io/github/created-at/Jouca/BadgesAPI?style=for-the-badge" style="text-align: center;"></img>
 
-An API mod for a better display for badges.
+An API mod to integrate badges in a special menu & optimizing UI for ProfilePage & CommentCell
 
 ![Mod Example](resources/screen.png)
 
@@ -22,7 +22,7 @@ Add the mod to your `mod.json`:
     "dependencies": [
         {
             "id": "jouca.badgesapi",
-            "version": ">=v1.0.6",
+            "version": ">=v1.1.0",
             "importance": "required"
         }
     ]
@@ -33,13 +33,14 @@ Add the mod to your `mod.json`:
 
 ## How to use this mod?
 
-* For `ProfilePage`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. **Make sure to put an ID on your badge which contains `-badge` inside of it.** 
+* For `ProfilePage` & `CommentCell`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. **Make sure to put an ID on your badge which contains `-badge` inside of it.** 
 
 Here's an example of how to put your badge inside:
 
 ```cpp
 #include <Geode/Geode.hpp>
 #include <Geode/modify/ProfilePage.hpp>
+#include <Geode/modify/CommentCell.hpp>
 
 using namespace geode::prelude;
 
@@ -49,7 +50,23 @@ class $modify(ProfilePage) {
         auto layer = m_mainLayer;
         
         CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+
         // your code for create your badge
+        
+        yourBadge->setID("mycustombadge-badge")
+        username_menu->addChild(yourBadge);
+    }
+};
+
+class $modify(CommentCell) {
+    void loadFromComment(GJComment* p0) {
+        CommentCell::loadFromComment(p0);
+        auto layer = m_mainLayer;
+        
+        CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+
+        // your code for create your badge
+
         yourBadge->setID("mycustombadge-badge")
         username_menu->addChild(yourBadge);
     }

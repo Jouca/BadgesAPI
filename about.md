@@ -1,6 +1,6 @@
 # Badges API
 
-An API mod for a better display for badges.
+An API mod to integrate badges in a special menu & optimizing UI for ProfilePage & CommentCell
 
 ![Mod Example](jouca.badgesapi/screen.png&scale:0.8)
 
