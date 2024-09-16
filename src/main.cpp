@@ -15,6 +15,7 @@ class $modify(CustomCommentCell, CommentCell) {
 	struct Fields {
 		bool loaded = false;
 		bool plus_badge = false;
+		bool pressed = false;
 		int badgeCount = 0;
 		BadgeMenu* badgeMenu = nullptr;
     };
@@ -169,17 +170,20 @@ class $modify(CustomCommentCell, CommentCell) {
 		for (int i = 0; i < childs->count(); i++) {
 			auto child = as<CCMenuItemSpriteExtra*>(childs->objectAtIndex(i));
 			if (child) {
-				CCSprite* sprite = as<CCSprite*>(child->getNormalImage());
+				CCMenuItemSpriteExtra* new_child = CCMenuItemSpriteExtra::create(child->getNormalImage(), this, child->m_pfnSelector);
+				CCSprite* sprite = CCSprite::createWithSpriteFrame(as<CCSprite*>(new_child->getNormalImage())->displayFrame());
 				if (sprite) {
-					sprite->setScale(sprite->getScale() * 1.5f);
+					sprite->setScale(child->getNormalImage()->getScale() * 1.5f);
 				}
-				child->updateSprite();
+				new_child->setNormalImage(sprite);
+				new_child->updateSprite();
+				childsRescaled->addObject(new_child);
 			} else {
 				CCSprite* sprite = as<CCSprite*>(childs->objectAtIndex(i));
-				sprite->setScale(sprite->getScale() * 1.5f);
+				CCSprite* sprite2 = CCSprite::createWithSpriteFrame(sprite->displayFrame());
+				sprite2->setScale(sprite2->getScale() * 1.5f);
+				childsRescaled->addObject(sprite2);
 			}
-
-			childsRescaled->addObject(child);
 		}
 
 		m_fields->badgeMenu = BadgeMenu::scene(childsRescaled);

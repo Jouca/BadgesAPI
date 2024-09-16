@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.1.1</c> <cb>(2024-09-16)</c>
+* <cy>Fixed</c> badge rescaling indefinitely when clicking everytime on the plus for comments
+
 ## <cj>v1.1.0</c> <cb>(2024-09-15)</c>
 * <cg>Added</c> handler for badges in comments
 
