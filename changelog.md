@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.1.2</c> <cb>(2024-10-02)</c>
+* <cy>Fixed</c> some bugs that was causing crashes for some mods
+
 ## <cj>v1.1.1</c> <cb>(2024-09-16)</c>
 * <cy>Fixed</c> badge rescaling indefinitely when clicking everytime on the plus for comments
 
