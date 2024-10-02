@@ -31,7 +31,7 @@ bool BadgeMenu::setup() {
     CCObject* obj;
     CCArray* cell = CCArray::create();
     CCARRAY_FOREACH(m_data, obj) {
-        cell->addObject(as<CCNode*>(obj));
+        cell->addObject(typeinfo_cast<CCNode*>(obj));
         if (cell->count() == badges_max) {
             cells.push_back(BadgeMenuCell::create(cell, { 300, 210 }));
             cell = CCArray::create();

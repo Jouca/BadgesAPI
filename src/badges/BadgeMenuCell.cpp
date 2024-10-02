@@ -23,7 +23,7 @@ bool BadgeMenuCell::init(const CCSize& size) {
     menu->setContentSize({292, 40});
 
     for (int i = 0; i < m_badges->count(); i++) {
-        auto badge = as<CCNode*>(m_badges->objectAtIndex(i));
+        auto badge = typeinfo_cast<CCNode*>(m_badges->objectAtIndex(i));
         menu->addChild(badge);
     }
 

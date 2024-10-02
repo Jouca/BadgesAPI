@@ -28,7 +28,7 @@ class $modify(CustomCommentCell, CommentCell) {
 		// Remove all badges from the layer
 		CCObject* childObj;
 		CommentCell* cell = this;
-    	CCARRAY_FOREACH(childsToRemove, childObj) as<CCNode*>(childObj)->removeFromParent();
+    	CCARRAY_FOREACH(childsToRemove, childObj) typeinfo_cast<CCNode*>(childObj)->removeFromParent();
 
 		m_fields->badgeCount = badges->count();
 
@@ -36,7 +36,7 @@ class $modify(CustomCommentCell, CommentCell) {
 		if (badges->count() == 1) {
 			m_fields->plus_badge = false;
 
-			CCNode* child = as<CCNode*>(badges->objectAtIndex(0));
+			CCNode* child = typeinfo_cast<CCNode*>(badges->objectAtIndex(0));
 
 			if (this->getChildByIDRecursive("percentage-label")) {
 				username_menu->insertBefore(child, cell->getChildByIDRecursive("percentage-label"));
@@ -48,16 +48,16 @@ class $modify(CustomCommentCell, CommentCell) {
 		// If there are more than one badge, create the badge menu
 		if (badges->count() >= 2) {
 			CCSprite* child_spr;
-			auto child = as<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
+			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
 			if (child) {
-				CCSprite* sprite = as<CCSprite*>(child->getNormalImage());
+				CCSprite* sprite = typeinfo_cast<CCSprite*>(child->getNormalImage());
 				if (sprite) {
 					child_spr = CCSprite::createWithSpriteFrame(sprite->displayFrame());
-					child_spr->setScale(as<CCSprite*>(child->getChildren()->objectAtIndex(0))->getScale());
+					child_spr->setScale(typeinfo_cast<CCSprite*>(child->getChildren()->objectAtIndex(0))->getScale());
 				}
 			} else {
-				child_spr = CCSprite::createWithSpriteFrame(as<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
-				child_spr->setScale(as<CCSprite*>(badges->objectAtIndex(0))->getScale());
+				child_spr = CCSprite::createWithSpriteFrame(typeinfo_cast<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
+				child_spr->setScale(typeinfo_cast<CCSprite*>(badges->objectAtIndex(0))->getScale());
 			}
 
 			CCSprite* badge_plus = CCSprite::create("plusLittleBtn.png"_spr);
@@ -106,7 +106,7 @@ class $modify(CustomCommentCell, CommentCell) {
 		CCArray* temp = CCArray::create();
 		CCObject* childObj;
     	CCARRAY_FOREACH(username_menu->getChildren(), childObj) {
-			CCNode* child = as<CCNode*>(childObj);
+			CCNode* child = typeinfo_cast<CCNode*>(childObj);
 			std::string find_str ("-badge");
 			std::string child_id = child->getID();
 			std::transform(child_id.begin(), child_id.end(), child_id.begin(), [](unsigned char c){ return std::tolower(c); });
@@ -120,12 +120,12 @@ class $modify(CustomCommentCell, CommentCell) {
 
 		CCMenuItemSpriteExtra* badge_api_plus = typeinfo_cast<CCMenuItemSpriteExtra*>(this->getChildByIDRecursive("badgeAPI-plus-badge"));
 		if (badge_api_plus) {
-			auto badge_api_plus_item = as<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
+			auto badge_api_plus_item = typeinfo_cast<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
 
 			// Check if badges are already loaded on BadgeMenu and then remove those on the profile page
 			CCObject* childObj;
 			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-				CCNode* child = as<CCNode*>(childObj);
+				CCNode* child = typeinfo_cast<CCNode*>(childObj);
 				if (auto user_child = username_menu->getChildByIDRecursive(child->getID())) {
 					user_child->removeFromParent();
 					username_menu->updateLayout();
@@ -134,18 +134,18 @@ class $modify(CustomCommentCell, CommentCell) {
 			
 			CCArray* temp2 = CCArray::create();
 			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-				CCNode* child = as<CCNode*>(childObj);
+				CCNode* child = typeinfo_cast<CCNode*>(childObj);
 				temp2->addObject(child);
 			}
 
 			CCARRAY_FOREACH(temp, childObj) {
-				CCNode* child = as<CCNode*>(childObj);
+				CCNode* child = typeinfo_cast<CCNode*>(childObj);
 
 				// check if ID is present on badge_api_plus_item objects
 				bool found = false;
 				CCObject* childObj2;
 				CCARRAY_FOREACH(badge_api_plus_item, childObj2) {
-					CCNode* child2 = as<CCNode*>(childObj2);
+					CCNode* child2 = typeinfo_cast<CCNode*>(childObj2);
 					if (child->getID() == child2->getID()) {
 						found = true;
 						break;
@@ -163,15 +163,15 @@ class $modify(CustomCommentCell, CommentCell) {
 	}
 
 	void onBadgePlus(CCObject* pSender) {
-		auto childs = as<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
+		auto childs = typeinfo_cast<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
 
 		// rescale the badges
 		CCArray* childsRescaled = CCArray::create();
 		for (int i = 0; i < childs->count(); i++) {
-			auto child = as<CCMenuItemSpriteExtra*>(childs->objectAtIndex(i));
+			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(childs->objectAtIndex(i));
 			if (child) {
 				CCMenuItemSpriteExtra* new_child = CCMenuItemSpriteExtra::create(child->getNormalImage(), this, child->m_pfnSelector);
-				CCSprite* sprite = CCSprite::createWithSpriteFrame(as<CCSprite*>(new_child->getNormalImage())->displayFrame());
+				CCSprite* sprite = CCSprite::createWithSpriteFrame(typeinfo_cast<CCSprite*>(new_child->getNormalImage())->displayFrame());
 				if (sprite) {
 					sprite->setScale(child->getNormalImage()->getScale() * 1.5f);
 				}
@@ -179,7 +179,7 @@ class $modify(CustomCommentCell, CommentCell) {
 				new_child->updateSprite();
 				childsRescaled->addObject(new_child);
 			} else {
-				CCSprite* sprite = as<CCSprite*>(childs->objectAtIndex(i));
+				CCSprite* sprite = typeinfo_cast<CCSprite*>(childs->objectAtIndex(i));
 				CCSprite* sprite2 = CCSprite::createWithSpriteFrame(sprite->displayFrame());
 				sprite2->setScale(sprite2->getScale() * 1.5f);
 				childsRescaled->addObject(sprite2);
@@ -190,7 +190,7 @@ class $modify(CustomCommentCell, CommentCell) {
 	}
 	
 	void loadFromComment(GJComment* p0) {
-		if (this->getChildByIDRecursive("mod-badge")) as<CCNode*>(this->getChildByIDRecursive("mod-badge"))->removeFromParent();
+		if (this->getChildByIDRecursive("mod-badge")) typeinfo_cast<CCNode*>(this->getChildByIDRecursive("mod-badge"))->removeFromParent();
 
 		CommentCell::loadFromComment(p0);
 
@@ -212,7 +212,7 @@ class $modify(CustomCommentCell, CommentCell) {
 		CCArray* childsToRemove = CCArray::create();
     	CCObject* childObj;
     	CCARRAY_FOREACH(username_menu->getChildren(), childObj) {
-			CCNode* child = as<CCNode*>(childObj);
+			CCNode* child = typeinfo_cast<CCNode*>(childObj);
 			std::string find_str ("-badge");
 			if (child->getID().find(find_str) != std::string::npos) {
 				childs->addObject(child);
@@ -241,7 +241,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 	void updateBadges(CCArray* childsToRemove, CCMenu* username_menu, CCLabelBMFont* label, CCArray* badges) {
 		// Remove all badges from the layer
 		CCObject* childObj;
-    	CCARRAY_FOREACH(childsToRemove, childObj) as<CCNode*>(childObj)->removeFromParent();
+    	CCARRAY_FOREACH(childsToRemove, childObj) typeinfo_cast<CCNode*>(childObj)->removeFromParent();
 
 		m_fields->badgeCount = badges->count();
 
@@ -249,23 +249,23 @@ class $modify(CustomProfilePage, ProfilePage) {
 		if (badges->count() == 1) {
 			m_fields->plus_badge = false;
 
-			CCNode* child = as<CCNode*>(badges->objectAtIndex(0));
+			CCNode* child = typeinfo_cast<CCNode*>(badges->objectAtIndex(0));
 			username_menu->addChild(child);
 		}
 
 		// If there are more than one badge, create the badge menu
 		if (badges->count() >= 2) {
 			CCSprite* child_spr;
-			auto child = as<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
+			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
 			if (child) {
-				CCSprite* sprite = as<CCSprite*>(child->getNormalImage());
+				CCSprite* sprite = typeinfo_cast<CCSprite*>(child->getNormalImage());
 				if (sprite) {
 					child_spr = CCSprite::createWithSpriteFrame(sprite->displayFrame());
-					child_spr->setScale(as<CCSprite*>(child->getChildren()->objectAtIndex(0))->getScale());
+					child_spr->setScale(typeinfo_cast<CCSprite*>(child->getChildren()->objectAtIndex(0))->getScale());
 				}
 			} else {
-				child_spr = CCSprite::createWithSpriteFrame(as<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
-				child_spr->setScale(as<CCSprite*>(badges->objectAtIndex(0))->getScale());
+				child_spr = CCSprite::createWithSpriteFrame(typeinfo_cast<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
+				child_spr->setScale(typeinfo_cast<CCSprite*>(badges->objectAtIndex(0))->getScale());
 			}
 
 			CCSprite* badge_plus = CCSprite::create("plusLittleBtn.png"_spr);
@@ -314,7 +314,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCArray* temp = CCArray::create();
 		CCObject* childObj;
     	CCARRAY_FOREACH(username_menu->getChildren(), childObj) {
-			CCNode* child = as<CCNode*>(childObj);
+			CCNode* child = typeinfo_cast<CCNode*>(childObj);
 			std::string find_str ("-badge");
 			std::string child_id = child->getID();
 			std::transform(child_id.begin(), child_id.end(), child_id.begin(), [](unsigned char c){ return std::tolower(c); });
@@ -328,12 +328,12 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 		CCMenuItemSpriteExtra* badge_api_plus = typeinfo_cast<CCMenuItemSpriteExtra*>(this->getChildByIDRecursive("badgeAPI-plus-badge"));
 		if (badge_api_plus) {
-			auto badge_api_plus_item = as<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
+			auto badge_api_plus_item = typeinfo_cast<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
 
 			// Check if badges are already loaded on BadgeMenu and then remove those on the profile page
 			CCObject* childObj;
 			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-				CCNode* child = as<CCNode*>(childObj);
+				CCNode* child = typeinfo_cast<CCNode*>(childObj);
 				if (auto user_child = username_menu->getChildByIDRecursive(child->getID())) {
 					user_child->removeFromParent();
 					username_menu->updateLayout();
@@ -342,18 +342,18 @@ class $modify(CustomProfilePage, ProfilePage) {
 			
 			CCArray* temp2 = CCArray::create();
 			CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-				CCNode* child = as<CCNode*>(childObj);
+				CCNode* child = typeinfo_cast<CCNode*>(childObj);
 				temp2->addObject(child);
 			}
 
 			CCARRAY_FOREACH(temp, childObj) {
-				CCNode* child = as<CCNode*>(childObj);
+				CCNode* child = typeinfo_cast<CCNode*>(childObj);
 
 				// check if ID is present on badge_api_plus_item objects
 				bool found = false;
 				CCObject* childObj2;
 				CCARRAY_FOREACH(badge_api_plus_item, childObj2) {
-					CCNode* child2 = as<CCNode*>(childObj2);
+					CCNode* child2 = typeinfo_cast<CCNode*>(childObj2);
 					if (child->getID() == child2->getID()) {
 						found = true;
 						break;
@@ -371,12 +371,12 @@ class $modify(CustomProfilePage, ProfilePage) {
 	}
 
 	void onBadgePlus(CCObject* pSender) {
-		auto childs = as<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
+		auto childs = typeinfo_cast<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
 		m_fields->badgeMenu = BadgeMenu::scene(childs);
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {
-		if (this->getChildByIDRecursive("mod-badge")) as<CCNode*>(this->getChildByIDRecursive("mod-badge"))->removeFromParent();
+		if (this->getChildByIDRecursive("mod-badge")) typeinfo_cast<CCNode*>(this->getChildByIDRecursive("mod-badge"))->removeFromParent();
 
 		ProfilePage::loadPageFromUserInfo(a2);
 
@@ -403,7 +403,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCArray* childsToRemove = CCArray::create();
     	CCObject* childObj;
     	CCARRAY_FOREACH(username_menu->getChildren(), childObj) {
-			CCNode* child = as<CCNode*>(childObj);
+			CCNode* child = typeinfo_cast<CCNode*>(childObj);
 			std::string find_str ("-badge");
 			if (child->getID().find(find_str) != std::string::npos) {
 				childs->addObject(child);
