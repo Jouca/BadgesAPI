@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.1.3</c> <cb>(2024-10-26)</c>
+* <cy>Fixed</c> Node ID and tag in comments (thanks hiimjustin000 for the contribution!)
+
 ## <cj>v1.1.2</c> <cb>(2024-10-02)</c>
 * <cy>Fixed</c> some bugs that was causing crashes for some mods
 

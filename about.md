@@ -12,3 +12,6 @@ You can find more infos on [GitHub repository README](https://github.com/Jouca/B
 * [Jouca](https://twitter.com/JoucaJouca)
 * **elnexreal** - Logo for the mod
 * [Mave](https://x.com/gmdpeter) - Plus button texture
+
+## Contributors
+* [hiimjustin000](https://x.com/hiimjustin000)

@@ -82,5 +82,8 @@ __**If you add your badge after the Layer has loaded (example with HTTP requests
 * elnexreal - Logo for the mod
 * [Mave](https://x.com/gmdpeter) - Plus button texture
 
+## Contributors
+* [hiimjustin000](https://x.com/hiimjustin000)
+
 ## License
 This project is created by [Jouca](https://github.com/Jouca) under the [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/), read more by clicking on the highlighted name.
