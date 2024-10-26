@@ -49,12 +49,13 @@ class $modify(ProfilePage) {
         ProfilePage::loadPageFromUserInfo(a2);
         auto layer = m_mainLayer;
         
-        CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+        CCMenu* username_menu = static_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 
         // your code for create your badge
         
         yourBadge->setID("mycustombadge-badge")
         username_menu->addChild(yourBadge);
+        username_menu->updateLayout();
     }
 };
 
@@ -63,12 +64,13 @@ class $modify(CommentCell) {
         CommentCell::loadFromComment(p0);
         auto layer = m_mainLayer;
         
-        CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+        CCMenu* username_menu = static_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 
         // your code for create your badge
 
         yourBadge->setID("mycustombadge-badge")
         username_menu->addChild(yourBadge);
+        username_menu->updateLayout();
     }
 };
 ```
