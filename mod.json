@@ -8,7 +8,7 @@
 	},
 	"id": "jouca.badgesapi",
 	"name": "Badges API",
-	"version": "v1.2.0-beta.1",
+	"version": "v1.2.0-beta.2",
 	"developer": "Jouca",
 	"description": "An API mod to integrate badges in a special menu & optimizing UI for ProfilePage & CommentCell",
 	"repository": "https://github.com/Jouca/BadgesAPI",
