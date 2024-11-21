@@ -1,17 +1,16 @@
 {
-	"geode": "4.0.0-beta.1",
+	"geode": "4.0.1",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
 		"mac": "2.2074",
-		"ios": "2.206"
+		"ios": "2.2074"
 	},
 	"id": "jouca.badgesapi",
 	"name": "Badges API",
-	"version": "v1.2.0-beta.3",
+	"version": "v1.2.0",
 	"developer": "Jouca",
-	"description": "An API mod to integrate badges in a special menu & optimizing UI for ProfilePage & CommentCell",
-	"repository": "https://github.com/Jouca/BadgesAPI",
+	"description": "API mod to integrate badges & optimizing UI",
 	"dependencies": [
         {
             "id": "geode.node-ids",
@@ -19,6 +18,9 @@
             "importance": "required"
         }
     ],
+	"links": {
+		"source": "https://github.com/Jouca/BadgesAPI"
+	},
 	"resources": {
         "sprites": [
             "resources/*.png"
@@ -27,5 +29,6 @@
 	"issues": {
 		"url": "https://github.com/Jouca/BadgesAPI/issues",
 		"info": "If you encounter an issue with Badges API, please report it here."
-	}
+	},
+	"tags": ["utility", "developer"]
 }

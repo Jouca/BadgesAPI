@@ -1,4 +1,8 @@
 # Changelog
+## <cj>v1.2.0</c> <cb>(2024-11-21)</c>
+* <cp>Badges API ported to Geode 4.0.1 (GD 2.2074)</c>
+* <cg>Added</c> tags for the mod
+
 ## <cj>v1.1.3</c> <cb>(2024-10-26)</c>
 * <cy>Fixed</c> Node ID and tag in comments (thanks hiimjustin000 for the contribution!)
 
