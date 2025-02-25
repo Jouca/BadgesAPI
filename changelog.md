@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.2.1</c> <cb>(2025-02-25)</c>
+* <cy>Fixed</c> data from badges not sent on badges menu
+
 ## <cj>v1.2.0</c> <cb>(2024-11-21)</c>
 * <cp>Badges API ported to Geode 4.0.1 (GD 2.2074)</c>
 * <cg>Added</c> tags for the mod
