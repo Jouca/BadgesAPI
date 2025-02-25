@@ -120,7 +120,7 @@ class $modify(CustomCommentCell, CommentCell) {
 
 		CCMenuItemSpriteExtra* badge_api_plus = typeinfo_cast<CCMenuItemSpriteExtra*>(this->getChildByIDRecursive("badgeAPI-plus-badge"));
 		if (badge_api_plus) {
-			auto badge_api_plus_item = static_cast<CCArray*>(badge_api_plus->getUserObject());
+			auto badge_api_plus_item = static_cast<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
 
 			// Check if badges are already loaded on BadgeMenu and then remove those on the profile page
 			CCObject* childObj;
@@ -177,6 +177,7 @@ class $modify(CustomCommentCell, CommentCell) {
 				new_child->setID(child->getID());
 				new_child->setTag(child->getTag());
 				new_child->setNormalImage(sprite);
+				new_child->setUserObject(child->getUserObject());
 				new_child->updateSprite();
 				childsRescaled->addObject(new_child);
 			} else {
@@ -191,8 +192,6 @@ class $modify(CustomCommentCell, CommentCell) {
 	}
 	
 	void loadFromComment(GJComment* p0) {
-		if (this->getChildByIDRecursive("mod-badge")) this->getChildByIDRecursive("mod-badge")->removeFromParent();
-
 		CommentCell::loadFromComment(p0);
 
 		if (m_fields->loaded) {
@@ -362,8 +361,6 @@ class $modify(CustomProfilePage, ProfilePage) {
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {
-		if (this->getChildByIDRecursive("mod-badge")) this->getChildByIDRecursive("mod-badge")->removeFromParent();
-
 		ProfilePage::loadPageFromUserInfo(a2);
 
 		if (m_fields->loaded) {
