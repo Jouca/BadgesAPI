@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.2.2</c> <cb>(2025-04-02)</c>
+* <cp>Badges API ported for Geode iOS</c>
+
 ## <cj>v1.2.1</c> <cb>(2025-02-25)</c>
 * <cy>Fixed</c> data from badges not sent on badges menu
 
