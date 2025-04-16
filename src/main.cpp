@@ -192,6 +192,8 @@ class $modify(CustomCommentCell, CommentCell) {
 	}
 	
 	void loadFromComment(GJComment* p0) {
+		if (this->getChildByIDRecursive("mod-badge")) this->getChildByIDRecursive("mod-badge")->removeFromParent();
+
 		CommentCell::loadFromComment(p0);
 
 		if (m_fields->loaded) {
@@ -361,6 +363,8 @@ class $modify(CustomProfilePage, ProfilePage) {
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {
+		if (this->getChildByIDRecursive("mod-badge")) this->getChildByIDRecursive("mod-badge")->removeFromParent();
+
 		ProfilePage::loadPageFromUserInfo(a2);
 
 		if (m_fields->loaded) {
