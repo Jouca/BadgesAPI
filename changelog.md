@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.2.3</c> <cb>(2025-04-16)</c>
+* <cy>Fixed</c> moderator badge appearing multiple times after refreshing profile
+
 ## <cj>v1.2.2</c> <cb>(2025-04-02)</c>
 * <cp>Badges API ported for Geode iOS</c>
 
