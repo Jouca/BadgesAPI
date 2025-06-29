@@ -1,5 +1,5 @@
 {
-	"geode": "4.3.1",
+	"geode": "4.6.2",
 	"gd": {
 		"win": "2.2074",
 		"android": "2.2074",
@@ -8,11 +8,11 @@
 	},
 	"id": "jouca.badgesapi",
 	"name": "Badges API",
-	"version": "v1.2.3",
+	"version": "v1.2.4",
 	"developer": "Jouca",
 	"description": "API mod to integrate badges & optimizing UI",
 	"dependencies": {
-		"geode.node-ids": ">=v1.20.1"
+		"geode.node-ids": ">=v1.21.1"
 	},
 	"links": {
 		"source": "https://github.com/Jouca/BadgesAPI"
@@ -26,5 +26,5 @@
 		"url": "https://github.com/Jouca/BadgesAPI/issues",
 		"info": "If you encounter an issue with Badges API, please report it here."
 	},
-	"tags": ["utility", "developer"]
+	"tags": ["utility", "developer", "api"]
 }
