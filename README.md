@@ -80,6 +80,12 @@ class $modify(CommentCell) {
 };
 ```
 
+* You also have the possibility **(optionnaly)** to **put a priority tag** on the ID to your badge to place it **more higher on the list** than some others badges using `:{priority number}`.
+
+```cpp
+yourBadge->setID("mycustombadge-badge:100")
+```
+
 __**If you add your badge after the Layer has loaded (example with HTTP requests), it will still be added!**__
 
 ## Credits

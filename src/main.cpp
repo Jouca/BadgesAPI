@@ -9,7 +9,39 @@
 #include <Geode/loader/Log.hpp>
 #include <string>
 #include "badges/BadgeMenu.h"
+
 #include "RescalingNode.hpp"
+
+// Helper: Extracts priority from badge ID (format: ...-badge:{number}), returns 9999 if not found
+static int getBadgePriority(CCNode* badge) {
+	std::string id = badge->getID();
+	std::transform(id.begin(), id.end(), id.begin(), [](unsigned char c){ return std::tolower(c); });
+	size_t pos = id.find("-badge:");
+	if (pos != std::string::npos) {
+		size_t start = pos + 7;
+		size_t end = id.find_first_not_of("0123456789", start);
+		std::string num = id.substr(start, end == std::string::npos ? end : end - start);
+		try {
+			int val = std::stoi(num);
+			return val > 0 ? val : 9999;
+		} catch (...) {}
+	}
+	return 9999;
+}
+
+// Helper: Sorts a CCArray* of badges by priority (lowest first)
+static CCArray* sortBadgesByPriority(CCArray* badges) {
+	std::vector<CCNode*> badgeVec;
+	for (int i = 0; i < badges->count(); ++i) {
+		badgeVec.push_back(static_cast<CCNode*>(badges->objectAtIndex(i)));
+	}
+	std::sort(badgeVec.begin(), badgeVec.end(), [](CCNode* a, CCNode* b) {
+		return getBadgePriority(a) < getBadgePriority(b);
+	});
+	CCArray* sorted = CCArray::create();
+	for (auto* b : badgeVec) sorted->addObject(b);
+	return sorted;
+}
 
 class $modify(CustomCommentCell, CommentCell) {
 	struct Fields {
@@ -24,20 +56,52 @@ class $modify(CustomCommentCell, CommentCell) {
 		(void)self.setHookPriority("CommentCell::loadFromComment", INT_MIN);
 	}
 
+
+// Helper: Extracts priority from badge ID (format: ...-badge:{number}), returns 9999 if not found
+static int getBadgePriority(CCNode* badge) {
+	std::string id = badge->getID();
+	std::transform(id.begin(), id.end(), id.begin(), [](unsigned char c){ return std::tolower(c); });
+	size_t pos = id.find("-badge:");
+	if (pos != std::string::npos) {
+		size_t start = pos + 7;
+		size_t end = id.find_first_not_of("0123456789", start);
+		std::string num = id.substr(start, end == std::string::npos ? end : end - start);
+		try {
+			int val = std::stoi(num);
+			return val > 0 ? val : 9999;
+		} catch (...) {}
+	}
+	return 9999;
+}
+
+// Helper: Sorts a CCArray* of badges by priority (lowest first)
+static CCArray* sortBadgesByPriority(CCArray* badges) {
+	std::vector<CCNode*> badgeVec;
+	for (int i = 0; i < badges->count(); ++i) {
+		badgeVec.push_back(static_cast<CCNode*>(badges->objectAtIndex(i)));
+	}
+	std::sort(badgeVec.begin(), badgeVec.end(), [](CCNode* a, CCNode* b) {
+		return getBadgePriority(a) < getBadgePriority(b);
+	});
+	CCArray* sorted = CCArray::create();
+	for (auto* b : badgeVec) sorted->addObject(b);
+	return sorted;
+}
+
 	void updateBadges(CCArray* childsToRemove, CCMenu* username_menu, CCArray* badges) {
 		// Remove all badges from the layer
 		CCObject* childObj;
 		CommentCell* cell = this;
 		CCARRAY_FOREACH(childsToRemove, childObj) static_cast<CCNode*>(childObj)->removeFromParent();
 
-		m_fields->badgeCount = badges->count();
+		// Sort badges by priority before displaying
+	CCArray* sortedBadges = sortBadgesByPriority(badges);
+		m_fields->badgeCount = sortedBadges->count();
 
 		// If there is only one badge, let it on the layer
-		if (badges->count() == 1) {
+		if (sortedBadges->count() == 1) {
 			m_fields->plus_badge = false;
-
-			CCNode* child = static_cast<CCNode*>(badges->objectAtIndex(0));
-
+			CCNode* child = static_cast<CCNode*>(sortedBadges->objectAtIndex(0));
 			if (this->getChildByIDRecursive("percentage-label")) {
 				username_menu->insertBefore(child, cell->getChildByIDRecursive("percentage-label"));
 			} else {
@@ -46,9 +110,9 @@ class $modify(CustomCommentCell, CommentCell) {
 		}
 
 		// If there are more than one badge, create the badge menu
-		if (badges->count() >= 2) {
+		if (sortedBadges->count() >= 2) {
 			CCSprite* child_spr;
-			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
+			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(sortedBadges->objectAtIndex(0));
 			if (child) {
 				CCSprite* sprite = typeinfo_cast<CCSprite*>(child->getNormalImage());
 				if (sprite) {
@@ -56,8 +120,8 @@ class $modify(CustomCommentCell, CommentCell) {
 					child_spr->setScale(child->getNormalImage()->getScale());
 				}
 			} else {
-				child_spr = CCSprite::createWithSpriteFrame(static_cast<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
-				child_spr->setScale(static_cast<CCSprite*>(badges->objectAtIndex(0))->getScale());
+				child_spr = CCSprite::createWithSpriteFrame(static_cast<CCSprite*>(sortedBadges->objectAtIndex(0))->displayFrame());
+				child_spr->setScale(static_cast<CCSprite*>(sortedBadges->objectAtIndex(0))->getScale());
 			}
 
 			CCSprite* badge_plus = CCSprite::create("plusLittleBtn.png"_spr);
@@ -67,7 +131,7 @@ class $modify(CustomCommentCell, CommentCell) {
 			if (child_spr) child_spr->addChild(badge_plus_node);
 
 			auto badge_plus_item = CCMenuItemSpriteExtra::create(child_spr, this, menu_selector(CustomCommentCell::onBadgePlus));
-			badge_plus_item->setUserObject(badges);
+			badge_plus_item->setUserObject(sortedBadges);
 			badge_plus_item->setID("badgeAPI-plus-badge");
 			badge_plus_item->setPosition(CCPoint { -5.f, -1.f });
 
@@ -163,11 +227,12 @@ class $modify(CustomCommentCell, CommentCell) {
 
 	void onBadgePlus(CCObject* pSender) {
 		auto childs = static_cast<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
-
+		// Sort by priority before showing in menu
+	CCArray* sortedBadges = sortBadgesByPriority(childs);
 		// rescale the badges
 		CCArray* childsRescaled = CCArray::create();
-		for (int i = 0; i < childs->count(); i++) {
-			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(childs->objectAtIndex(i));
+		for (int i = 0; i < sortedBadges->count(); i++) {
+			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(sortedBadges->objectAtIndex(i));
 			if (child) {
 				CCMenuItemSpriteExtra* new_child = CCMenuItemSpriteExtra::create(child->getNormalImage(), this, child->m_pfnSelector);
 				CCSprite* sprite = CCSprite::createWithSpriteFrame(static_cast<CCSprite*>(new_child->getNormalImage())->displayFrame());
@@ -181,13 +246,12 @@ class $modify(CustomCommentCell, CommentCell) {
 				new_child->updateSprite();
 				childsRescaled->addObject(new_child);
 			} else {
-				CCSprite* sprite = static_cast<CCSprite*>(childs->objectAtIndex(i));
+				CCSprite* sprite = static_cast<CCSprite*>(sortedBadges->objectAtIndex(i));
 				CCSprite* sprite2 = CCSprite::createWithSpriteFrame(sprite->displayFrame());
 				sprite2->setScale(sprite2->getScale() * 1.5f);
 				childsRescaled->addObject(sprite2);
 			}
 		}
-
 		m_fields->badgeMenu = BadgeMenu::scene(childsRescaled);
 	}
 	
@@ -231,20 +295,21 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCObject* childObj;
 		CCARRAY_FOREACH(childsToRemove, childObj) static_cast<CCNode*>(childObj)->removeFromParent();
 
-		m_fields->badgeCount = badges->count();
+		// Sort badges by priority before displaying
+	CCArray* sortedBadges = sortBadgesByPriority(badges);
+		m_fields->badgeCount = sortedBadges->count();
 
 		// If there is only one badge, let it on the layer
-		if (badges->count() == 1) {
+		if (sortedBadges->count() == 1) {
 			m_fields->plus_badge = false;
-
-			CCNode* child = typeinfo_cast<CCNode*>(badges->objectAtIndex(0));
+			CCNode* child = typeinfo_cast<CCNode*>(sortedBadges->objectAtIndex(0));
 			username_menu->addChild(child);
 		}
 
 		// If there are more than one badge, create the badge menu
-		if (badges->count() >= 2) {
+		if (sortedBadges->count() >= 2) {
 			CCSprite* child_spr;
-			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(badges->objectAtIndex(0));
+			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(sortedBadges->objectAtIndex(0));
 			if (child) {
 				CCSprite* sprite = typeinfo_cast<CCSprite*>(child->getNormalImage());
 				if (sprite) {
@@ -252,8 +317,8 @@ class $modify(CustomProfilePage, ProfilePage) {
 					child_spr->setScale(child->getNormalImage()->getScale());
 				}
 			} else {
-				child_spr = CCSprite::createWithSpriteFrame(static_cast<CCSprite*>(badges->objectAtIndex(0))->displayFrame());
-				child_spr->setScale(static_cast<CCSprite*>(badges->objectAtIndex(0))->getScale());
+				child_spr = CCSprite::createWithSpriteFrame(static_cast<CCSprite*>(sortedBadges->objectAtIndex(0))->displayFrame());
+				child_spr->setScale(static_cast<CCSprite*>(sortedBadges->objectAtIndex(0))->getScale());
 			}
 
 			CCSprite* badge_plus = CCSprite::create("plusLittleBtn.png"_spr);
@@ -263,14 +328,14 @@ class $modify(CustomProfilePage, ProfilePage) {
 			if (child_spr) child_spr->addChild(badge_plus_node);
 
 			auto badge_plus_item = CCMenuItemSpriteExtra::create(child_spr, this, menu_selector(CustomProfilePage::onBadgePlus));
-			badge_plus_item->setUserObject(badges);
+			badge_plus_item->setUserObject(sortedBadges);
 			badge_plus_item->setID("badgeAPI-plus-badge");
 			badge_plus_item->setPosition(label->getPosition() + CCPoint { -5.f, -1.f });
 
 			CCMenuItemSpriteExtra* badge_api_plus = typeinfo_cast<CCMenuItemSpriteExtra*>(this->getChildByIDRecursive("badgeAPI-plus-badge"));
 			if (badge_api_plus) {
 				badge_api_plus->removeFromParent();
-			}	
+			}    
 			username_menu->addChild(badge_plus_item);
 
 			username_menu->updateLayout();
@@ -359,7 +424,9 @@ class $modify(CustomProfilePage, ProfilePage) {
 
 	void onBadgePlus(CCObject* pSender) {
 		auto childs = static_cast<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
-		m_fields->badgeMenu = BadgeMenu::scene(childs);
+		// Sort by priority before showing in menu
+	CCArray* sortedBadges = sortBadgesByPriority(childs);
+		m_fields->badgeMenu = BadgeMenu::scene(sortedBadges);
 	}
 
 	void loadPageFromUserInfo(GJUserScore* a2) {
