@@ -22,7 +22,7 @@ Add the mod to your `mod.json`:
     "dependencies": [
         {
             "id": "jouca.badgesapi",
-            "version": ">=v1.2.4",
+            "version": ">=v1.3.1",
             "importance": "required"
         },
         {

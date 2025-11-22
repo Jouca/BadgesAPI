@@ -22,9 +22,6 @@ bool BadgeMenu::setup() {
     auto director = cocos2d::CCDirector::sharedDirector();
 
     m_noElasticity = true;
-    registerWithTouchDispatcher();
-    setTouchEnabled(true);
-    setKeypadEnabled(true);
 
     CCArrayExt<BadgeMenuCell*> cells;
     int badges_max = 8;
@@ -44,7 +41,6 @@ bool BadgeMenu::setup() {
     border->ignoreAnchorPointForPosition(false);
     border->setPositionX(m_mainLayer->getContentSize().width / 2);
     border->setPositionY(border->getContentSize().height / 2 + 5);
-    setTouchPriority(100);
     m_mainLayer->addChild(border);
 
     CCSprite* title_badges = CCSprite::create("badges.png"_spr);

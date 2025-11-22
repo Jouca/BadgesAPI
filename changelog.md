@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.3.1</c> <cb>(2025-11-22)</c>
+* <cy>Fixed</c> issues related to touch priority in badge menu
+
 ## <cj>v1.3.0</c> <cb>(2025-09-18)</c>
 * <cg>Added</c> priority tag for badges to place them more higher on the list than some others badges
 
