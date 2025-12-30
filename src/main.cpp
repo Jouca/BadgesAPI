@@ -2,14 +2,13 @@
 #include <Geode/modify/ProfilePage.hpp>
 #include <Geode/modify/CommentCell.hpp>
 #include <Geode/modify/CCMenu.hpp>
+#include <Geode/loader/Log.hpp>
 
 // Badges API
 // Mod API made by Jouca
 
-#include <Geode/loader/Log.hpp>
 #include <string>
 #include "badges/BadgeMenu.h"
-
 #include "RescalingNode.hpp"
 
 // Helper: Extracts priority from badge ID (format: ...-badge:{number}), returns 9999 if not found
@@ -56,38 +55,6 @@ class $modify(CustomCommentCell, CommentCell) {
 		(void)self.setHookPriority("CommentCell::loadFromComment", INT_MIN);
 	}
 
-
-// Helper: Extracts priority from badge ID (format: ...-badge:{number}), returns 9999 if not found
-static int getBadgePriority(CCNode* badge) {
-	std::string id = badge->getID();
-	std::transform(id.begin(), id.end(), id.begin(), [](unsigned char c){ return std::tolower(c); });
-	size_t pos = id.find("-badge:");
-	if (pos != std::string::npos) {
-		size_t start = pos + 7;
-		size_t end = id.find_first_not_of("0123456789", start);
-		std::string num = id.substr(start, end == std::string::npos ? end : end - start);
-		try {
-			int val = std::stoi(num);
-			return val > 0 ? val : 9999;
-		} catch (...) {}
-	}
-	return 9999;
-}
-
-// Helper: Sorts a CCArray* of badges by priority (lowest first)
-static CCArray* sortBadgesByPriority(CCArray* badges) {
-	std::vector<CCNode*> badgeVec;
-	for (int i = 0; i < badges->count(); ++i) {
-		badgeVec.push_back(static_cast<CCNode*>(badges->objectAtIndex(i)));
-	}
-	std::sort(badgeVec.begin(), badgeVec.end(), [](CCNode* a, CCNode* b) {
-		return getBadgePriority(a) < getBadgePriority(b);
-	});
-	CCArray* sorted = CCArray::create();
-	for (auto* b : badgeVec) sorted->addObject(b);
-	return sorted;
-}
-
 	void updateBadges(CCArray* childsToRemove, CCMenu* username_menu, CCArray* badges) {
 		// Remove all badges from the layer
 		CCObject* childObj;
@@ -95,7 +62,7 @@ static CCArray* sortBadgesByPriority(CCArray* badges) {
 		CCARRAY_FOREACH(childsToRemove, childObj) static_cast<CCNode*>(childObj)->removeFromParent();
 
 		// Sort badges by priority before displaying
-	CCArray* sortedBadges = sortBadgesByPriority(badges);
+		CCArray* sortedBadges = sortBadgesByPriority(badges);
 		m_fields->badgeCount = sortedBadges->count();
 
 		// If there is only one badge, let it on the layer
@@ -228,7 +195,7 @@ static CCArray* sortBadgesByPriority(CCArray* badges) {
 	void onBadgePlus(CCObject* pSender) {
 		auto childs = static_cast<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
 		// Sort by priority before showing in menu
-	CCArray* sortedBadges = sortBadgesByPriority(childs);
+		CCArray* sortedBadges = sortBadgesByPriority(childs);
 		// rescale the badges
 		CCArray* childsRescaled = CCArray::create();
 		for (int i = 0; i < sortedBadges->count(); i++) {
@@ -296,7 +263,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCARRAY_FOREACH(childsToRemove, childObj) static_cast<CCNode*>(childObj)->removeFromParent();
 
 		// Sort badges by priority before displaying
-	CCArray* sortedBadges = sortBadgesByPriority(badges);
+		CCArray* sortedBadges = sortBadgesByPriority(badges);
 		m_fields->badgeCount = sortedBadges->count();
 
 		// If there is only one badge, let it on the layer
@@ -425,7 +392,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 	void onBadgePlus(CCObject* pSender) {
 		auto childs = static_cast<CCArray*>(static_cast<CCNode*>(pSender)->getUserObject());
 		// Sort by priority before showing in menu
-	CCArray* sortedBadges = sortBadgesByPriority(childs);
+		CCArray* sortedBadges = sortBadgesByPriority(childs);
 		m_fields->badgeMenu = BadgeMenu::scene(sortedBadges);
 	}
 
