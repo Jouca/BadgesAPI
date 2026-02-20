@@ -83,7 +83,7 @@ class $modify(CustomCommentCell, CommentCell) {
 			break;
 		}
 		if (!posterBoyBadge) {
-			posterBoyBadge = CCSprite::createWithSpriteFrame("GJ_profileButton_001.png"); // fallback
+			posterBoyBadge = CCSprite::createWithSpriteFrameName("GJ_profileButton_001.png"); // fallback
 		}
 
 		// If there is only one badge, let it on the layer
@@ -328,7 +328,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 			break;
 		}
 		if (!posterBoyBadge) {
-			posterBoyBadge = CCSprite::createWithSpriteFrame("GJ_profileButton_001.png"); // fallback
+			posterBoyBadge = CCSprite::createWithSpriteFrameName("GJ_profileButton_001.png"); // fallback
 		}
 
 		// If there is only one badge, let it on the layer
