@@ -18,7 +18,7 @@ BadgeMenu* BadgeMenu::scene(CCArray* array) {
 BadgeMenu::BadgeMenu(CCArray* data) : m_data(data) {}
 
 bool BadgeMenu::init() {
-    if (!geode::Popup::init(300.0f, 210.0f)) return;
+    if (!geode::Popup::init(300.0f, 210.0f)) return false;
 
     auto winSize = cocos2d::CCDirector ::sharedDirector()->getWinSize();
     auto director = cocos2d::CCDirector::sharedDirector();
