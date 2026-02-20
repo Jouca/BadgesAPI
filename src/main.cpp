@@ -432,7 +432,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 			// 	}
 			// }
 			for (CCNode* child : CCArrayExt<CCNode*>(badge_api_plus_item)) {
-				if (!node) continue;
+				if (!child) continue;
 				auto user_child = username_menu->getChildByIDRecursive(child->getID());
 				if (!user_child) continue;
 				user_child->removeFromParent();
