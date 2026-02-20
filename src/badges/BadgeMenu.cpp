@@ -28,7 +28,15 @@ bool BadgeMenu::setup() {
 
     CCObject* obj;
     CCArray* cell = CCArray::create();
-    CCARRAY_FOREACH(m_data, obj) {
+    // CCARRAY_FOREACH(m_data, obj) {
+    //     cell->addObject(obj);
+    //     if (cell->count() == badges_max) {
+    //         cells.push_back(BadgeMenuCell::create(cell, { 300, 210 }));
+    //         cell = CCArray::create();
+    //     }
+    // }
+    for (CCObject* obj : CCArrayExt<CCObject*>(m_data)) {
+        if (!obj) continue;
         cell->addObject(obj);
         if (cell->count() == badges_max) {
             cells.push_back(BadgeMenuCell::create(cell, { 300, 210 }));
