@@ -2,9 +2,9 @@
 #include "../includes.h"
 #include "../OldBorder.hpp"
 
-class BadgeMenu : public Popup<> {
+class BadgeMenu : public Popup {
     protected:
-        bool setup() override;
+        bool init() override;
     public:
         CCArray* m_data;
 
