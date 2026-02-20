@@ -431,7 +431,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 			// 		username_menu->updateLayout();
 			// 	}
 			// }
-			for (CCNode* node : CCArrayExt<CCNode*>(badge_api_plus_item)) {
+			for (CCNode* child : CCArrayExt<CCNode*>(badge_api_plus_item)) {
 				if (!node) continue;
 				auto user_child = username_menu->getChildByIDRecursive(child->getID());
 				if (!user_child) continue;
