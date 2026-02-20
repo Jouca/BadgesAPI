@@ -320,6 +320,17 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCArray* sortedBadges = sortBadgesByPriority(badges);
 		m_fields->badgeCount = sortedBadges->count();
 
+		// determine which badge to select as the first and foremost badge
+		CCSprite* posterBoyBadge;
+		for (CCNode* badge : CCArrayExt<CCNode*>(sortedBadges)) {
+			if (!badge || !typeinfo_cast<CCSprite*>(badge)) continue;
+			posterBoyBadge = static_cast<CCSprite*>(badge);
+			break;
+		}
+		if (!posterBoyBadge) {
+			posterBoyBadge = CCSprite::createWithSpriteFrame("GJ_profileButton_001.png"); // fallback
+		}
+
 		// If there is only one badge, let it on the layer
 		if (sortedBadges->count() == 1) {
 			m_fields->plus_badge = false;
@@ -328,7 +339,7 @@ class $modify(CustomProfilePage, ProfilePage) {
 		}
 
 		// If there are more than one badge, create the badge menu
-		if (sortedBadges->count() >= 2) {
+		if (sortedBadges->count() > 1) {
 			CCSprite* child_spr;
 			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(posterBoyBadge);
 			if (child) {
