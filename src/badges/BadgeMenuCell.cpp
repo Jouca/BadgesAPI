@@ -6,8 +6,8 @@ BadgeMenuCell* BadgeMenuCell::create(CCArray* badges, const CCSize& size) {
     if (instance && instance->init(size)) {
         return instance;
     } else {
-        CC_SAFE_DELETE(instance);
-
+        // CC_SAFE_DELETE(instance);
+        delete instance;
         return nullptr;
     }
 }

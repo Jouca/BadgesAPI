@@ -4,7 +4,7 @@
 BadgeMenu* BadgeMenu::scene(CCArray* array) {
     auto popup = new BadgeMenu(array);
 
-    if (popup && popup->initAnchored(300.0f, 210.0f)) {
+    if (popup && popup->init()) {
         popup->autorelease();
         popup->setZOrder(1000);
         popup->show();
@@ -17,7 +17,9 @@ BadgeMenu* BadgeMenu::scene(CCArray* array) {
 
 BadgeMenu::BadgeMenu(CCArray* data) : m_data(data) {}
 
-bool BadgeMenu::setup() {
+bool BadgeMenu::init() {
+    if (!geode::Popup::init(300.0f, 210.0f)) return false;
+
     auto winSize = cocos2d::CCDirector ::sharedDirector()->getWinSize();
     auto director = cocos2d::CCDirector::sharedDirector();
 
@@ -28,7 +30,15 @@ bool BadgeMenu::setup() {
 
     CCObject* obj;
     CCArray* cell = CCArray::create();
-    CCARRAY_FOREACH(m_data, obj) {
+    // CCARRAY_FOREACH(m_data, obj) {
+    //     cell->addObject(obj);
+    //     if (cell->count() == badges_max) {
+    //         cells.push_back(BadgeMenuCell::create(cell, { 300, 210 }));
+    //         cell = CCArray::create();
+    //     }
+    // }
+    for (CCObject* obj : CCArrayExt<CCObject*>(m_data)) {
+        if (!obj) continue;
         cell->addObject(obj);
         if (cell->count() == badges_max) {
             cells.push_back(BadgeMenuCell::create(cell, { 300, 210 }));
