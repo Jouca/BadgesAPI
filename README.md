@@ -22,12 +22,12 @@ Add the mod to your `mod.json`:
     "dependencies": [
         {
             "id": "jouca.badgesapi",
-            "version": ">=v1.3.1",
+            "version": ">=v1.4.0",
             "importance": "required"
         },
         {
             "id": "geode.node-ids",
-            "version": ">=v1.21.1",
+            "version": ">=v1.22.0",
             "importance": "required"
         }
     ]
@@ -95,6 +95,8 @@ __**If you add your badge after the Layer has loaded (example with HTTP requests
 
 ## Contributors
 * [hiimjustin000](https://x.com/hiimjustin000)
+* [RayDeeUx](https://github.com/RayDeeUx)
+* [Fire](https://github.com/FireMario211)
 
 ## License
 This project is created by [Jouca](https://github.com/Jouca) under the [GNU General Public License v3.0](https://choosealicense.com/licenses/gpl-3.0/), read more by clicking on the highlighted name.

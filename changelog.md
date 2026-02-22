@@ -1,4 +1,8 @@
 # Changelog
+## <cj>v1.4.0</c> <cb>(2026-02-22)</c>
+* <cp>Badges API ported to Geode 5.0.0 (GD 2.2081)</c>
+* <cy>Fixed</c> bugs & issues to the codebase (thanks RayDeeUx & Fire for the contribution!)
+
 ## <cj>v1.3.1</c> <cb>(2025-11-22)</c>
 * <cy>Fixed</c> issues related to touch priority in badge menu
 
