@@ -76,9 +76,9 @@ class $modify(CustomCommentCell, CommentCell) {
 		m_fields->badgeCount = sortedBadges->count();
 
 		// determine which badge to select as the first and foremost badge
-		CCSprite* posterBoyBadge;
+		CCSprite* posterBoyBadge = nullptr;
 		for (CCNode* badge : CCArrayExt<CCNode*>(sortedBadges)) {
-			if (!badge || !typeinfo_cast<CCSprite*>(badge)) continue;
+			if (!badge || (!typeinfo_cast<CCSprite*>(badge) && !typeinfo_cast<CCMenuItemSpriteExtra*>(badge))) continue;
 			posterBoyBadge = static_cast<CCSprite*>(badge);
 			break;
 		}
@@ -171,8 +171,9 @@ class $modify(CustomCommentCell, CommentCell) {
 		// }
 		for (CCNode* child : username_menu->getChildrenExt()) {
 			if (!child) continue;
-			if (child->getID() == "badgeapi-plus-badge") continue;
-			if (!geode::utils::string::contains(geode::utils::string::toLower(child->getID()), "-badge")) continue;
+			std::string child_id = geode::utils::string::toLower(child->getID());
+            if (child_id == "badgeapi-plus-badge") continue;
+            if (!geode::utils::string::contains(child_id, "-badge")) continue;
 			childsToRemoveTemp->addObject(child);
 			temp->addObject(child);
 		}
@@ -321,9 +322,9 @@ class $modify(CustomProfilePage, ProfilePage) {
 		m_fields->badgeCount = sortedBadges->count();
 
 		// determine which badge to select as the first and foremost badge
-		CCSprite* posterBoyBadge;
+		CCSprite* posterBoyBadge = nullptr;
 		for (CCNode* badge : CCArrayExt<CCNode*>(sortedBadges)) {
-			if (!badge || !typeinfo_cast<CCSprite*>(badge)) continue;
+			if (!badge || (!typeinfo_cast<CCSprite*>(badge) && !typeinfo_cast<CCMenuItemSpriteExtra*>(badge))) continue;
 			posterBoyBadge = static_cast<CCSprite*>(badge);
 			break;
 		}
@@ -412,8 +413,9 @@ class $modify(CustomProfilePage, ProfilePage) {
 		// }
 		for (CCNode* child : username_menu->getChildrenExt()) {
 			if (!child) continue;
-			if (child->getID() == "badgeapi-plus-badge") continue;
-			if (!geode::utils::string::contains(geode::utils::string::toLower(child->getID()), "-badge")) continue;
+			std::string child_id = geode::utils::string::toLower(child->getID());
+        	if (child_id == "badgeapi-plus-badge") continue;
+            if (!geode::utils::string::contains(child_id, "-badge")) continue;
 			childsToRemoveTemp->addObject(child);
 			temp->addObject(child);
 		}
