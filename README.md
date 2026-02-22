@@ -58,7 +58,7 @@ class $modify(ProfilePage) {
 
         // your code for create your badge
         
-        yourBadge->setID("mycustombadge-badge")
+        yourBadge->setID("mycustombadge-badge"_spr);
         username_menu->addChild(yourBadge);
         username_menu->updateLayout();
     }
@@ -73,7 +73,7 @@ class $modify(CommentCell) {
 
         // your code for create your badge
 
-        yourBadge->setID("mycustombadge-badge")
+        yourBadge->setID("mycustombadge-badge"_spr);
         username_menu->addChild(yourBadge);
         username_menu->updateLayout();
     }
