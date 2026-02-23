@@ -15,16 +15,13 @@
 static int getBadgePriority(CCNode* badge) {
 	std::string id = geode::utils::string::toLower(badge->getID());
 	if (!geode::utils::string::contains(id, "-badge:")) return 9999;
-	// std::transform(id.begin(), id.end(), id.begin(), [](unsigned char c){ return std::tolower(c); });
+
 	size_t pos = id.find("-badge:");
 	if (pos != std::string::npos) {
 		size_t start = pos + 7;
 		size_t end = id.find_first_not_of("0123456789", start);
 		std::string num = id.substr(start, end == std::string::npos ? end : end - start);
-		// try {
-		// 	int val = std::stoi(num);
-		// 	return val > 0 ? val : 9999;
-		// } catch (...) {}
+
 		return geode::utils::numFromString<int>(num).unwrapOr(9999);
 	}
 	return 9999;
@@ -33,9 +30,7 @@ static int getBadgePriority(CCNode* badge) {
 // Helper: Sorts a CCArray* of badges by priority (lowest first)
 static CCArray* sortBadgesByPriority(CCArray* badges) {
 	std::vector<CCNode*> badgeVec;
-	// for (int i = 0; i < badges->count(); ++i) {
-	// 	badgeVec.push_back(static_cast<CCNode*>(badges->objectAtIndex(i)));
-	// }
+
 	for (CCNode* badge : CCArrayExt<CCNode*>(badges)) {
 		if (!badge) continue;
 		badgeVec.push_back(badge);
@@ -63,8 +58,6 @@ class $modify(CustomCommentCell, CommentCell) {
 
 	void updateBadges(CCArray* childsToRemove, CCMenu* username_menu, CCArray* badges) {
 		// Remove all badges from the layer
-		// CCObject* childObj;
-		// CCARRAY_FOREACH(childsToRemove, childObj) static_cast<CCNode*>(childObj)->removeFromParent();
 		CommentCell* cell = this;
 		for (CCNode* childObj : CCArrayExt<CCNode*>(childsToRemove)) {
 			if (!childObj) continue;
@@ -145,30 +138,12 @@ class $modify(CustomCommentCell, CommentCell) {
 		int badge_count = m_fields->badgeCount;
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
-		if (!username_menu) {
-			log::error("Could not find username-menu");
-			return;
-		}
+		if (!username_menu) return;
 
-		if (!m_fields->loaded) {
-			return;
-		}
+		if (!m_fields->loaded) return;
 
 		CCArray* childsToRemoveTemp = CCArray::create();
 		CCArray* temp = CCArray::create();
-		CCObject* childObj;
-		// CCARRAY_FOREACH(username_menu->getChildren(), childObj) {
-		// CCNode* child = static_cast<CCNode*>(childObj);
-		// std::string find_str ("-badge");
-		// std::string child_id = child->getID();
-		// std::transform(child_id.begin(), child_id.end(), child_id.begin(), [](unsigned char c){ return std::tolower(c); });
-		// if (child_id.find(find_str) != std::string::npos) {
-		// 	if (child_id != "badgeapi-plus-badge") {
-		// 		childsToRemoveTemp->addObject(child);
-		// 		temp->addObject(child);
-		// 	}
-		// }
-		// }
 		for (CCNode* child : username_menu->getChildrenExt()) {
 			if (!child) continue;
 			std::string child_id = geode::utils::string::toLower(child->getID());
@@ -182,15 +157,6 @@ class $modify(CustomCommentCell, CommentCell) {
 		if (badge_api_plus) {
 			auto badge_api_plus_item = static_cast<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
 
-			// Check if badges are already loaded on BadgeMenu and then remove those on the profile page
-			// CCObject* childObj;
-			// CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-			// 	CCNode* child = static_cast<CCNode*>(childObj);
-			// 	if (auto user_child = username_menu->getChildByIDRecursive(child->getID())) {
-			// 		user_child->removeFromParent();
-			// 		username_menu->updateLayout();
-			// 	}
-			// }
 			for (CCNode* child : CCArrayExt<CCNode*>(badge_api_plus_item)) {
 				if (!child) continue;
 				auto user_child = username_menu->getChildByIDRecursive(child->getID());
@@ -200,29 +166,11 @@ class $modify(CustomCommentCell, CommentCell) {
 			username_menu->updateLayout(); // update layout once outside of the loop
 			
 			CCArray* temp2 = CCArray::create();
-			// CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-			// 	temp2->addObject(childObj);
-			// }
 			for (CCNode* child : CCArrayExt<CCNode*>(badge_api_plus_item)) {
 				if (!child) continue;
 				temp2->addObject(child);
 			}
 
-			// CCARRAY_FOREACH(temp, childObj) {
-			// 	CCNode* child = static_cast<CCNode*>(childObj);
-
-			// 	// check if ID is present on badge_api_plus_item objects
-			// 	bool found = false;
-			// 	CCObject* childObj2;
-			// 	CCARRAY_FOREACH(badge_api_plus_item, childObj2) {
-			// 		CCNode* child2 = static_cast<CCNode*>(childObj2);
-			// 		if (child->getID() == child2->getID()) {
-			// 			found = true;
-			// 			break;
-			// 		}
-			// 	}
-			// 	if (!found) temp2->addObject(child);
-			// }
 			for (CCNode* child : CCArrayExt<CCNode*>(temp)) {
 				if (!child) continue;
 				bool found = false;
@@ -278,19 +226,14 @@ class $modify(CustomCommentCell, CommentCell) {
 
 		CommentCell::loadFromComment(p0);
 
-		if (m_fields->loaded) {
-			return;
-		}
+		if (m_fields->loaded) return;
 
 		m_fields->loaded = true;
 
 		auto layer = m_mainLayer;
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
-		if (!username_menu) {
-			//log::error("Could not find username-menu");
-			return;
-		}
+		if (!username_menu) return;
 
 		this->schedule(schedule_selector(CustomCommentCell::updateBadgesSchedule), 0.0f);
 	}
@@ -311,7 +254,6 @@ class $modify(CustomProfilePage, ProfilePage) {
 	void updateBadges(CCArray* childsToRemove, CCMenu* username_menu, CCLabelBMFont* label, CCArray* badges) {
 		// Remove all badges from the layer
 		CCObject* childObj;
-		// CCARRAY_FOREACH(childsToRemove, childObj) static_cast<CCNode*>(childObj)->removeFromParent();
 		for (CCNode* child : CCArrayExt<CCNode*>(childsToRemove)) {
 			if (!child) continue;
 			child->removeFromParent();
@@ -382,15 +324,10 @@ class $modify(CustomProfilePage, ProfilePage) {
 		int badge_count = m_fields->badgeCount;
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
-		if (!username_menu) {
-			log::error("Could not find username-menu");
-			return;
-		}
+		if (!username_menu) return;
+
 		CCLabelBMFont* label = typeinfo_cast<CCLabelBMFont*>(layer->getChildByIDRecursive("username-label"));
-		if (!label) {
-			log::error("Could not find username-label");
-			return;
-		}
+		if (!label) return;
 
 		if (!m_fields->loaded) {
 			return;
@@ -399,18 +336,6 @@ class $modify(CustomProfilePage, ProfilePage) {
 		CCArray* childsToRemoveTemp = CCArray::create();
 		CCArray* temp = CCArray::create();
 		CCObject* childObj;
-		// CCARRAY_FOREACH(username_menu->getChildren(), childObj) {
-		// 	CCNode* child = static_cast<CCNode*>(childObj);
-		// 	std::string find_str ("-badge");
-		// 	std::string child_id = child->getID();
-		// 	std::transform(child_id.begin(), child_id.end(), child_id.begin(), [](unsigned char c){ return std::tolower(c); });
-		// 	if (child_id.find(find_str) != std::string::npos) {
-		// 		if (child_id != "badgeapi-plus-badge") {
-		// 			childsToRemoveTemp->addObject(child);
-		// 			temp->addObject(child);
-		// 		}
-		// 	}
-		// }
 		for (CCNode* child : username_menu->getChildrenExt()) {
 			if (!child) continue;
 			std::string child_id = geode::utils::string::toLower(child->getID());
@@ -424,15 +349,6 @@ class $modify(CustomProfilePage, ProfilePage) {
 		if (badge_api_plus) {
 			auto badge_api_plus_item = static_cast<CCArray*>(static_cast<CCNode*>(badge_api_plus)->getUserObject());
 
-			// Check if badges are already loaded on BadgeMenu and then remove those on the profile page
-			// CCObject* childObj;
-			// CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-			// 	CCNode* child = static_cast<CCNode*>(childObj);
-			// 	if (auto user_child = username_menu->getChildByIDRecursive(child->getID())) {
-			// 		user_child->removeFromParent();
-			// 		username_menu->updateLayout();
-			// 	}
-			// }
 			for (CCNode* child : CCArrayExt<CCNode*>(badge_api_plus_item)) {
 				if (!child) continue;
 				auto user_child = username_menu->getChildByIDRecursive(child->getID());
@@ -442,29 +358,11 @@ class $modify(CustomProfilePage, ProfilePage) {
 			username_menu->updateLayout(); // update layout once after loop finishes
 			
 			CCArray* temp2 = CCArray::create();
-			// CCARRAY_FOREACH(badge_api_plus_item, childObj) {
-			// 	temp2->addObject(childObj);
-			// }
 			for (CCNode* node : CCArrayExt<CCNode*>(badge_api_plus_item)) {
 				if (!node) continue;
 				temp2->addObject(node);
 			}
 
-			// CCARRAY_FOREACH(temp, childObj) {
-			// 	CCNode* child = static_cast<CCNode*>(childObj);
-
-			// 	// check if ID is present on badge_api_plus_item objects
-			// 	bool found = false;
-			// 	CCObject* childObj2;
-			// 	CCARRAY_FOREACH(badge_api_plus_item, childObj2) {
-			// 		CCNode* child2 = static_cast<CCNode*>(childObj2);
-			// 		if (child->getID() == child2->getID()) {
-			// 			found = true;
-			// 			break;
-			// 		}
-			// 	}
-			// 	if (!found) temp2->addObject(child);
-			// }
 			for (CCNode* child : CCArrayExt<CCNode*>(temp)) {
 				if (!child) continue;
 				bool found = false;
@@ -492,6 +390,14 @@ class $modify(CustomProfilePage, ProfilePage) {
 		m_fields->badgeMenu = BadgeMenu::scene(sortedBadges);
 	}
 
+	void usernameMenuFixer(float dt) {
+        auto winSize = CCDirector::sharedDirector()->getWinSize();
+        auto usernameMenu = m_mainLayer->getChildByID("username-menu");
+        if (usernameMenu->getChildrenCount() > 1) {
+            usernameMenu->setPositionX(winSize.width / 2.1);
+        }
+    }
+
 	void loadPageFromUserInfo(GJUserScore* a2) {
 		if (this->getChildByIDRecursive("mod-badge")) this->getChildByIDRecursive("mod-badge")->removeFromParent();
 
@@ -506,16 +412,12 @@ class $modify(CustomProfilePage, ProfilePage) {
 		auto layer = m_mainLayer;
 
 		CCMenu* username_menu = typeinfo_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
-		if (!username_menu) {
-			//log::error("Could not find username-menu");
-			return;
-		}
+		if (!username_menu) return;
+
 		CCLabelBMFont* label = typeinfo_cast<CCLabelBMFont*>(layer->getChildByIDRecursive("username-label"));
-		if (!label) {
-			//log::error("Could not find username-label");
-			return;
-		}
+		if (!label) return;
 
 		this->schedule(schedule_selector(CustomProfilePage::updateBadgesSchedule), 0.0f);
+		this->schedule(schedule_selector(CustomProfilePage::usernameMenuFixer), 0.0f);
 	}
 };
