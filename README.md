@@ -22,12 +22,12 @@ Add the mod to your `mod.json`:
     "dependencies": [
         {
             "id": "jouca.badgesapi",
-            "version": ">=v1.4.0",
+            "version": ">=v1.4.1",
             "importance": "required"
         },
         {
             "id": "geode.node-ids",
-            "version": ">=v1.22.0",
+            "version": ">=v1.23.0",
             "importance": "required"
         }
     ]

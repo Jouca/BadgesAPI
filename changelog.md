@@ -1,4 +1,7 @@
 # Changelog
+## <cj>v1.4.1</c> <cb>(2026-02-23)</c>
+* <cy>Fixed</c> positionning of username-menu when adding multiple badges
+
 ## <cj>v1.4.0</c> <cb>(2026-02-22)</c>
 * <cp>Badges API ported to Geode 5.0.0 (GD 2.2081)</c>
 * <cy>Fixed</c> bugs & issues to the codebase (thanks RayDeeUx & Fire for the contribution!)

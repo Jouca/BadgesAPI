@@ -8,11 +8,11 @@
 	},
 	"id": "jouca.badgesapi",
 	"name": "Badges API",
-	"version": "v1.4.0",
+	"version": "v1.4.1",
 	"developer": "Jouca",
 	"description": "API mod to integrate badges & optimizing UI",
 	"dependencies": {
-		"geode.node-ids": ">=v1.22.0"
+		"geode.node-ids": ">=v1.23.0"
 	},
 	"links": {
 		"source": "https://github.com/Jouca/BadgesAPI"
