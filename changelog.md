@@ -1,4 +1,8 @@
 # Changelog
+## <cj>v1.4.2</c> <cb>(2026-04-22)</c>
+* <cy>Fixed</c> listener assignment for CCMenuItemSpriteExtra
+* <cy>Updated</c> documentation & also for clickable badges
+
 ## <cj>v1.4.1</c> <cb>(2026-02-23)</c>
 * <cy>Fixed</c> positionning of username-menu when adding multiple badges
 
