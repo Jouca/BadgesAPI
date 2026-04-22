@@ -38,9 +38,9 @@ Add the mod to your `mod.json`:
 
 ## How to use this mod?
 
-* For `ProfilePage` & `CommentCell`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. **Make sure to put an ID on your badge which contains `-badge` inside of it.** 
+* For `ProfilePage` & `CommentCell`, you need to make sure that your badge is in the `CCMenu*` with the ID `username-menu`. **Make sure to put an ID on your badge which contains `-badge` inside of it.**
 
-Here's an example of how to put your badge inside:
+Here's an example of how to put a **non-clickable** badge inside:
 
 ```cpp
 #include <Geode/Geode.hpp>
@@ -53,11 +53,10 @@ class $modify(ProfilePage) {
     void loadPageFromUserInfo(GJUserScore* a2) {
         ProfilePage::loadPageFromUserInfo(a2);
         auto layer = m_mainLayer;
-        
+
         CCMenu* username_menu = static_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 
-        // your code for create your badge
-        
+        auto yourBadge = CCSprite::createWithSpriteFrameName("yourBadgeSprite.png"_spr);
         yourBadge->setID("mycustombadge-badge"_spr);
         username_menu->addChild(yourBadge);
         username_menu->updateLayout();
@@ -68,11 +67,10 @@ class $modify(CommentCell) {
     void loadFromComment(GJComment* p0) {
         CommentCell::loadFromComment(p0);
         auto layer = m_mainLayer;
-        
+
         CCMenu* username_menu = static_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
 
-        // your code for create your badge
-
+        auto yourBadge = CCSprite::createWithSpriteFrameName("yourBadgeSprite.png"_spr);
         yourBadge->setID("mycustombadge-badge"_spr);
         username_menu->addChild(yourBadge);
         username_menu->updateLayout();
@@ -80,10 +78,58 @@ class $modify(CommentCell) {
 };
 ```
 
-* You also have the possibility **(optionnaly)** to **put a priority tag** on the ID to your badge to place it **more higher on the list** than some others badges using `:{priority number}`.
+### Clickable badges
+
+If you want your badge to open a popup or trigger an action when clicked, use `CCMenuItemExt::createSpriteExtra` from the Geode SDK. This ensures the click callback works correctly both in the menu and inside the BadgesAPI show-more popup.
+
+> **Do not use UIBuilder's `intoMenuItem`** for badge buttons — it stores the callback as a child node of the button, which can be invalidated when BadgesAPI moves buttons around.
 
 ```cpp
-yourBadge->setID("mycustombadge-badge:100")
+#include <Geode/Geode.hpp>
+#include <Geode/modify/ProfilePage.hpp>
+#include <Geode/modify/CommentCell.hpp>
+
+using namespace geode::prelude;
+
+class $modify(ProfilePage) {
+    void loadPageFromUserInfo(GJUserScore* a2) {
+        ProfilePage::loadPageFromUserInfo(a2);
+        auto layer = m_mainLayer;
+
+        CCMenu* username_menu = static_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+
+        auto sprite = CCSprite::createWithSpriteFrameName("yourBadgeSprite.png"_spr);
+        auto yourBadge = CCMenuItemExt::createSpriteExtra(sprite, [](CCMenuItemSpriteExtra*) {
+            FLAlertLayer::create(nullptr, "My Badge", "Badge description here.", "OK", nullptr, 300.f)->show();
+        });
+        yourBadge->setID("mycustombadge-badge"_spr);
+        username_menu->addChild(yourBadge);
+        username_menu->updateLayout();
+    }
+};
+
+class $modify(CommentCell) {
+    void loadFromComment(GJComment* p0) {
+        CommentCell::loadFromComment(p0);
+        auto layer = m_mainLayer;
+
+        CCMenu* username_menu = static_cast<CCMenu*>(layer->getChildByIDRecursive("username-menu"));
+
+        auto sprite = CCSprite::createWithSpriteFrameName("yourBadgeSprite.png"_spr);
+        auto yourBadge = CCMenuItemExt::createSpriteExtra(sprite, [](CCMenuItemSpriteExtra*) {
+            FLAlertLayer::create(nullptr, "My Badge", "Badge description here.", "OK", nullptr, 300.f)->show();
+        });
+        yourBadge->setID("mycustombadge-badge"_spr);
+        username_menu->addChild(yourBadge);
+        username_menu->updateLayout();
+    }
+};
+```
+
+* You also have the possibility **(optionally)** to **put a priority tag** on the ID to your badge to place it **higher on the list** than some other badges using `:{priority number}`.
+
+```cpp
+yourBadge->setID("mycustombadge-badge:100"_spr);
 ```
 
 __**If you add your badge after the Layer has loaded (example with HTTP requests), it will still be added!**__

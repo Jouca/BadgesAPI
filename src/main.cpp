@@ -200,7 +200,7 @@ class $modify(CustomCommentCell, CommentCell) {
 		for (int i = 0; i < sortedBadges->count(); i++) {
 			auto child = typeinfo_cast<CCMenuItemSpriteExtra*>(sortedBadges->objectAtIndex(i));
 			if (child) {
-				CCMenuItemSpriteExtra* new_child = CCMenuItemSpriteExtra::create(child->getNormalImage(), this, child->m_pfnSelector);
+				CCMenuItemSpriteExtra* new_child = CCMenuItemSpriteExtra::create(child->getNormalImage(), child->m_pListener, child->m_pfnSelector);
 				CCSprite* sprite = CCSprite::createWithSpriteFrame(static_cast<CCSprite*>(new_child->getNormalImage())->displayFrame());
 				if (sprite) {
 					sprite->setScale(child->getNormalImage()->getScale() * 1.5f);
